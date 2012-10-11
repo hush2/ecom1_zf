@@ -46,7 +46,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
             'charset'  => 'UTF8');
 
         $db = Zend_Db::factory('PDO_MYSQL', $params);
-        Zend_DB_Table_Abstract::setDefaultAdapter($db);
+        Zend_Db_Table_Abstract::setDefaultAdapter($db);
     }
 
 }
