@@ -1,0 +1,39 @@
+<?php $this->pageTitle = $this->page->title  ?>
+
+<h3><?= $this->pageTitle ?></h3>
+
+<?php if (!Zend_Auth::getInstance()->hasIdentity()): ?>
+    <p class='error'>Thank you for your interest in this content. You must be a logged in as a registered user to view this page in its entirety.</p>
+    <div><?= $this->page->description ?></div>
+
+<?php else: ?>
+
+    <?php if (Zend_Auth::getInstance()->getIdentity()->isExpired): ?>
+        <p class="error">Thank you for your interest in this content, but your account is no longer current. Please <a href='<?= $this->baseUrl('renew') ?>'>renew your account</a> in order to view this page in its entirety</p>
+        <div>
+            <?= $this->page->description ?>
+        </div>
+    <?php else: ?>
+        <?php
+        $heart = '<img src="'.$this->baseUrl('images/heart_48.png').'" align="middle">';
+        $cross = '<img src="'.$this->baseUrl('images/cross_48.png').'" align="middle">';
+        ?>
+        <p>
+        <?php if ($this->hasFlash('added')): ?>
+        <?= $heart ?>This has been added to your favorites!<a href='<?= $this->baseUrl("/remove_from_favorites/{$this->page->id}") ?>'><?= $cross ?></a>
+
+        <?php elseif ($this->hasFlash('removed')): ?>
+            This page has been removed from your favorites!<?= $cross ?>
+
+        <?php elseif ($this->isFavorite): ?>
+            <?= $heart ?>This is a favorite! <a href='<?= $this->baseUrl("/remove_from_favorites/{$this->page->id}") ?>'><?= $cross ?></a>
+
+        <?php else: ?>
+            Make this a favorite! <a href='<?= $this->baseUrl("/add_to_favorites/{$this->page->id}") ?>'><?= $heart ?></a>
+        <?php endif ?>
+        </p>
+        <div>
+            <?= nl2br($this->page->content) ?>
+        </div>
+    <?php endif ?>
+<?php endif ?>

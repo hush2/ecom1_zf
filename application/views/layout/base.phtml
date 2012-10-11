@@ -1,0 +1,78 @@
+<?= $this->doctype() ?><html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <?= $this->headMeta()->appendHttpEquiv('Content-Type', 'text/html; charset=utf-8') ?>
+    <?= $this->headTitle($this->pageTitle, 'append') ?>
+    <?= $this->headLink()->appendStylesheet($this->baseUrl('css/styles.css')) ?>
+</head>
+
+<html><body>
+
+<div id="wrap">
+    <div class="header">
+        <h1><a href="<?= $this->baseUrl() ?>">Knowledge is Power</a></h1>
+        <h2>and it pays to know</h2>
+    </div>
+    <div id="nav">
+        <ul>
+            <li <?= $this->selected('index') ?>><a href="<?= $this->baseUrl() ?>"><span>Home</span></a></li>
+            <li <?= $this->selected('about') ?>><a href="<?= $this->baseUrl('about') ?>"><span>About</span></a></li>
+            <li <?= $this->selected('contact') ?>><a href="<?= $this->baseUrl('contact') ?>"><span>Contact</span></a></li>
+            <?php if (!Zend_Auth::getInstance()->hasIdentity()): ?>
+            <li <?= $this->selected('register') ?>><a href="<?= $this->baseUrl('register') ?>"><span>Register</span></a></li>
+            <?php endif ?>
+        </ul>
+    </div>
+    <div class="page">
+        <div class="content">
+            <?= $this->layout()->content ?>
+            <p><br clear="all" /></p>
+        </div>
+    <div class="sidebar">
+
+    <?php if (Zend_Auth::getInstance()->hasIdentity()): ?>
+        <div class="title">
+            <h4>Manage Your Account</h4>
+        </div>
+        <ul>
+            <li><a href="<?= $this->baseUrl('renew') ?>"><span>Renew Account</span></a></li>
+            <li><a href="<?= $this->baseUrl('change_password') ?>"><span>Change Password</span></a></li>
+            <li><a href="<?= $this->baseUrl('favorites') ?>"><span>Favorites</span></a></li>
+            <li><a href="<?= $this->baseUrl('history') ?>"><span>History</span></a></li>
+            <li><a href="<?= $this->baseUrl('logout') ?>"><span>Logout</span></a></li>
+        </ul>
+        <?php if (Zend_Auth::getInstance()->getIdentity()->type == 'admin'): ?>
+            <div class="title">
+                <h4>Administration</h4>
+            </div>
+            <ul>
+                <li><a href="<?= $this->baseUrl('add_page') ?>"><span>Add Page</span></a></li>
+                <li><a href="<?= $this->baseUrl('add_pdf') ?>"><span>Add PDF</span></a></li>
+            </ul>
+        <?php endif ?>
+        
+        <?php else: ?>
+            <div class="title">
+                <h4>Login</h4>
+            </div>
+            <?= isset($this->loginForm) ? $this->loginForm : new Application_Form_Login ?>
+        <?php endif ?>
+
+        <div class="title">
+            <h4>Content</h4>
+        </div>
+        <ul>
+            <?php foreach ($this->categories() as $category): ?>
+                <li><a href="<?= $this->baseUrl("category/$category->id") ?>"><span><?= $category->category ?></span></a></li>
+            <?php endforeach ?>
+            <li><a href="<?= $this->baseUrl('pdfs') ?>"><span>PDF Guides</span></a></li>
+        </ul>
+    </div>
+
+    <div class="footer">
+        <p><a href="#" title="Site Map">Site Map</a> | <a href="#" title="Site Policies">Policies</a> &nbsp; - &nbsp; &copy; Knowledge is Power &nbsp; - &nbsp; Design by <a href="http://www.spyka.net">spyka webmaster</a></p>
+    </div>
+
+    </div>
+</div>
+</body></html>

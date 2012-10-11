@@ -1,0 +1,11 @@
+<? $this->pageTitle ='Add a PDF' ?>
+
+<h3><?= $this->pageTitle ?></h3>
+
+<?php if ($this->hasFlash('success')): ?>
+
+    <h4 class='success'>The PDF has been added!</h4>
+
+<?php endif ?>
+
+<?= $this->form ?>

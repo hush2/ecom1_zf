@@ -1,0 +1,13 @@
+<?php $this->pageTitle = $this->pdf->title ?>
+
+<h3><?= $this->pageTitle ?></h3>
+
+<?php if (!Zend_Auth::getInstance()->hasIdentity()): ?>
+    <p class='error'>Thank you for your interest in this content. You must be logged in as a registered user to view any of the PDFs listed below.</p>
+
+<?php elseif (Zend_Auth::getInstance()->getIdentity()->isExpired): ?>
+    <p class='error'>Thank you for your interest in this content. Unfortunately your account has expired. Please <a href="<?= $this->baseUrl('renew') ?>">renew your account</a> in order to view any of the PDFs listed below.</p>
+
+<?php endif ?>
+
+<?= $this->pdf->description ?>

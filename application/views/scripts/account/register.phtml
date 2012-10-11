@@ -1,0 +1,15 @@
+<? $this->pageTitle ='Register' ?>
+
+<?php if ($this->hasFlash('success')): ?>
+
+    <h3>Thanks!</h3>
+    <p>Thank you for registering! To complete the process, please now click the button below so that you may pay for your site access via PayPal. The cost is $10 (US) per year.</p>
+
+<?php else: ?>
+
+    <h3><?= $this->pageTitle ?></h3>
+    <p>Access to the site's content is available to registered users at a cost of $10.00 (US) per year. Use the form below to begin the registration process. <strong>Note: All fields are required.</strong> After completing this form, you'll be presented with the opportunity to securely pay for your yearly subscription via <a href="http://www.paypal.com">PayPal</a>.</p>
+
+    <?= $this->form ?>
+
+<?php endif ?>
